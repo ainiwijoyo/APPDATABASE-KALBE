@@ -1,0 +1,82 @@
+SET search_path TO app;
+
+-- Membuat tabel Produk
+CREATE TABLE app.Produk (
+    id SERIAL PRIMARY KEY,
+    nama_produk VARCHAR(255)
+);
+
+-- Membuat tabel Toko
+CREATE TABLE app.Toko (
+    id SERIAL PRIMARY KEY,
+    nama_toko VARCHAR(255),
+    alamat_toko VARCHAR(255)
+);
+
+ALTER TABLE app.Toko
+ADD CONSTRAINT UQ_NamaToko UNIQUE (nama_toko);
+
+-- Membuat tabel DistribusiProduk
+CREATE TABLE app.DistribusiProduk (
+    id SERIAL PRIMARY KEY,
+    product_id INT,
+    qty INT,
+    unit VARCHAR(50),
+    store_destination INT,
+    operator VARCHAR(255),
+    shipping_vehicle VARCHAR(50),
+    no_polisi VARCHAR(20),
+    shipping_driver VARCHAR(255),
+    shipping_codriver VARCHAR(255),
+    sending_time TIMESTAMP,
+    delivered_time TIMESTAMP,
+    received_by VARCHAR(255)
+);
+
+
+ALTER TABLE app.DistribusiProduk
+ADD CONSTRAINT FK_ProductID
+FOREIGN KEY (product_id) REFERENCES app.Produk(id);
+
+ALTER TABLE app.DistribusiProduk
+ADD CONSTRAINT FK_StoreDestination
+FOREIGN KEY (store_destination) REFERENCES app.Toko(id);
+
+INSERT INTO app.Toko (nama_toko, alamat_toko)
+VALUES
+    ('Apotek Agus Sari', 'Jln Angga Jaya no 21'),
+    ('Toko Maju Bersama', 'Jln Agus Salim no 22'),
+    ('Toko Anak Sehat', 'Jln Imam Bonjol no 33'),
+    ('Apotek Agung', 'Pasar Senen no 301');
+
+INSERT INTO app.Produk (nama_produk)
+VALUES
+    ('Hydro Coco 250ml'),
+    ('Hydro Coco Vita-D 330ml'),
+    ('Milna Biskuit Bayi Apel'),
+    ('Hydro Coco 250ml'),
+    ('Hydro Coco 330ml'),
+    ('Entrasol Gold Original'),
+    ('Milna Nature Delight Apel Peach'),
+    ('Milna Nature Delight Apel Labu Wortel'),
+    ('Milna Rice Crackers Apple Orange'),
+    ('Milna Bubur Organik Multigrain'),
+    ('Entrasol Active Vanilla latte'),
+    ('Entrasol Gold Original'),
+    ('Entrasol Gold Chocolate');
+
+INSERT INTO app.DistribusiProduk (product_id, qty, unit, store_destination, operator, shipping_vehicle, no_polisi, shipping_driver, shipping_codriver, sending_time, delivered_time, received_by)
+VALUES
+    (1, 5, 'box', 1, 'Ahmad Agus', 'Box A001', 'B 1234 GA', 'Dimas Ahmad', 'Andi Wahyu', '2023-05-01 10:00', '2023-05-01 13:30', 'Dian Ayu'),
+    (2, 5, 'box', 1, 'Ahmad Agus', 'Box A001', 'B 1234 GA', 'Dimas Ahmad', 'Andi Wahyu', '2023-05-01 10:00', '2023-05-01 13:30', 'Dian Ayu'),
+    (3, 10, 'box', 1, 'Ahmad Agus', 'Box A001', 'B 1234 GA', 'Dimas Ahmad', 'Andi Wahyu', '2023-05-01 10:00', '2023-05-01 13:30', 'Dian Ayu'),
+    (4, 3, 'box', 2, 'Ahmad Agus', 'Box A002', 'B 3214 JS', 'Hari Saputra', 'Dadang Bima', '2023-05-01 11:00', '2023-05-01 13:00', 'Eriawan'),
+    (5, 2, 'box', 2, 'Ahmad Agus', 'Box A002', 'B 3214 JS', 'Hari Saputra', 'Dadang Bima', '2023-05-01 11:00', '2023-05-01 13:00', 'Eriawan'),
+    (6, 8, 'box', 2, 'Ahmad Agus', 'Box A002', 'B 3214 JS', 'Hari Saputra', 'Dadang Bima', '2023-05-01 11:00', '2023-05-01 13:00', 'Eriawan'),
+    (7, 10, 'box', 3, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 12:00', 'Aji'),
+    (8, 5, 'box', 3, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 12:00', 'Aji'),
+    (9, 12, 'box', 3, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 12:00', 'Aji'),
+    (10, 10, 'box', 3, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 12:00', 'Aji'),
+    (11, 5, 'box', 4, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 14:00', 'Jamal'),
+    (12, 4, 'box', 4, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 14:00', 'Jamal'),
+    (13, 6, 'box', 4, 'Fitrianto', 'Box A001', 'B 1234 GA', 'Ginanjar', 'Hari Saputra', '2023-05-02 9:00', '2023-05-02 14:00', 'Jamal');
